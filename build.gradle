@@ -7,7 +7,19 @@
 
 plugins {
     id 'com.github.ben-manes.versions' version '0.38.0'
+    id 'application'
+    id 'checkstyle'
+}
+
+compileJava {
+    options.release = 11
+}
+
+repositories {
+    mavenCentral()
 }
 
 group = 'hexlet.code'
 version = '1.0-SNAPSHOT'
+
+mainClassName = 'hexlet.code.App'
