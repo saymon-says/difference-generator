@@ -11,6 +11,9 @@ plugins {
     id 'checkstyle'
 }
 
+group = 'hexlet.code'
+version = '1.0-SNAPSHOT'
+
 compileJava {
     options.release = 11
 }
@@ -19,7 +22,8 @@ repositories {
     mavenCentral()
 }
 
-group = 'hexlet.code'
-version = '1.0-SNAPSHOT'
+dependencies {
+    implementation 'info.picocli:picocli:4.6.1'
+}
 
 mainClassName = 'hexlet.code.App'
