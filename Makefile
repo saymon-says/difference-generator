@@ -1,3 +1,5 @@
+.PHONY: build
+
 install:
 	gradlew clean install
 
@@ -15,4 +17,4 @@ build:
 
 dist:
 	gradlew clean install
-	build\install\app\bin\app -h
+	build\install\app\bin\app src/main/java/resource/filepath1.json src/main/java/resource/filepath2.json
