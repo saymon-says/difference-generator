@@ -1,4 +1,4 @@
-name: Java Cl with Gradle
+name: my-project-check
 
 on:
   push:
@@ -8,9 +8,7 @@ on:
 
 jobs:
   build:
-
     runs-on: windows-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 14

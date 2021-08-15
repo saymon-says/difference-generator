@@ -2,6 +2,7 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.38.0'
     id 'application'
     id 'checkstyle'
+    id 'jacoco'
 }
 
 group = 'hexlet.code'
@@ -21,6 +22,13 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.4'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.4'
     implementation 'org.junit.jupiter:junit-jupiter-engine:5.8.0-M1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.0-M1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.0-M1'
+    testImplementation 'org.assertj:assertj-core:3.20.2'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 mainClassName = 'hexlet.code.App'

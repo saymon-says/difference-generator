@@ -6,18 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Differ {
-
-    public static void main(String[] args) throws IOException {
-        Path path1 = Paths.get("filepath1.json");
-        Path path2 = Paths.get("filepath2.json");
-        System.out.println(generate(path1, path2));
-    }
 
     private static final int SUB_STRING = 4;
 //
@@ -30,7 +23,6 @@ public class Differ {
     public static String generate(Path filePath1, Path filePath2) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
-
         File file1 = new File(String.valueOf(filePath1));
         File file2 = new File(String.valueOf(filePath2));
         Map<String, Object> mapOfFile1 = mapper.readValue(file1, new TypeReference<>() {
