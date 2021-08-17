@@ -1,5 +1,6 @@
 language: java
-sudo: true
+before_install:
+  - chmod +x gradlew
 jdk:
   - oraclejdk14
 script:
