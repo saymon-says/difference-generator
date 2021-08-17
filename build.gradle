@@ -9,11 +9,20 @@ group = 'hexlet.code'
 version = '1.0-SNAPSHOT'
 
 compileJava {
-    options.release = 11
+    options.release = 14
 }
 
 repositories {
     mavenCentral()
+}
+
+jacoco {
+    applyTo run
+}
+
+tasks.register('applicationCodeCoverageReport', JacocoReport) {
+    executionData run
+    sourceSets sourceSets.main
 }
 
 dependencies {

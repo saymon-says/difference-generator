@@ -6,57 +6,45 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.HashMap;
+import java.nio.file.Paths;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class Differ {
 
-    private static final int SUB_STRING = 4;
-//
-//    public static void main(String[] args) throws IOException {
-//        Path path1 = Paths.get("src/main/java/resource/filepath1.json");
-//        Path path2 = Paths.get("src/main/java/resource/filepath2.json");
-//        generate(path1, path2);
-//    }
+    public static String generate(String filePath1, String filePath2) throws Exception {
 
-    public static String generate(Path filePath1, Path filePath2) throws IOException {
+        Map<String, Object> mapOfFile1 = getMapFromFile(filePath1);
+        Map<String, Object> mapOfFile2 = getMapFromFile(filePath2);
 
-        ObjectMapper mapper = new ObjectMapper();
-        File file1 = new File(String.valueOf(filePath1));
-        File file2 = new File(String.valueOf(filePath2));
-        Map<String, Object> mapOfFile1 = mapper.readValue(file1, new TypeReference<>() {
-        });
-        Map<String, Object> mapOfFile2 = mapper.readValue(file2, new TypeReference<>() {
-        });
+        Set<String> keySet = new TreeSet<>();
+        for (Map.Entry<String, Object> map : mapOfFile1.entrySet()) {
+            keySet.add(map.getKey());
+        }
+        for (Map.Entry<String, Object> map : mapOfFile2.entrySet()) {
+            keySet.add(map.getKey());
+        }
 
-        Map<String, Object> resultMap = new HashMap<>();
+        Map<String, Object> resultMap = new LinkedHashMap<>();
 
-        for (Map.Entry<String, Object> mapEntry : mapOfFile1.entrySet()) {
-            if (mapOfFile2.containsKey(mapEntry.getKey())) {
-                if (!mapEntry.getValue().equals(mapOfFile2.get(mapEntry.getKey()))) {
-                    resultMap.put("- " + mapEntry.getKey(), mapEntry.getValue());
-                    resultMap.put("+ " + mapEntry.getKey(), mapOfFile2.get(mapEntry.getKey()));
+        for (String key : keySet) {
+            if ((mapOfFile1.containsKey(key)) && (mapOfFile2.containsKey(key))) {
+                if (mapOfFile1.get(key).equals(mapOfFile2.get(key))) {
+                    resultMap.put("  " + key, mapOfFile2.get(key));
                 } else {
-                    resultMap.put("  " + mapEntry.getKey(), mapEntry.getValue());
+                    resultMap.put("- " + key, mapOfFile1.get(key));
+                    resultMap.put("+ " + key, mapOfFile2.get(key));
                 }
+            } else if ((mapOfFile1.containsKey(key)) && (!mapOfFile2.containsKey(key))) {
+                resultMap.put("- " + key, mapOfFile1.get(key));
             } else {
-                resultMap.put("- " + mapEntry.getKey(), mapEntry.getValue());
+                resultMap.put("+ " + key, mapOfFile2.get(key));
             }
         }
 
-        for (Map.Entry<String, Object> mapEntry : mapOfFile2.entrySet()) {
-            if (!mapOfFile1.containsKey(mapEntry.getKey())) {
-//                if (!mapEntry.getValue().equals(mapOfFile1.get(mapEntry.getKey()))) {
-//                    resultMap.put("- " + mapEntry.getKey(), mapEntry.getValue());
-//                    resultMap.put("+ " + mapEntry.getKey(), mapOfFile1.get(mapEntry.getKey()));
-//                } else {
-//                    resultMap.put("  " + mapEntry.getKey(), mapEntry.getValue());
-//                }
-//            } else {
-                resultMap.put("+ " + mapEntry.getKey(), mapEntry.getValue());
-            }
-        }
         return mapToString(resultMap);
     }
 
@@ -64,12 +52,20 @@ public class Differ {
         return map.entrySet()
                 .stream()
                 .map(entry -> "  " + entry.getKey() + ": " + entry.getValue())
-                .sorted((x1, x2) -> {
-                    String withoutPrefix1 = x1.substring(SUB_STRING);
-                    String withoutPrefix2 = x2.substring(SUB_STRING);
-                    return CharSequence.compare(withoutPrefix1, withoutPrefix2);
-                })
-                .collect(Collectors.joining("\n", "{\n", "\n}"));
+                .collect(Collectors.joining("\r\n", "{\r\n", "\r\n}"));
     }
 
+    public static Path getFixturePath(String fileName) {
+        return Paths.get("src/test/java/resources/", fileName).toAbsolutePath().normalize();
+    }
+
+    private static File getFile(String fileName) {
+        return new File(String.valueOf(getFixturePath(fileName)));
+    }
+
+    private static Map<String, Object> getMapFromFile(String filePath) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(getFile(filePath), new TypeReference<>() {
+        });
+    }
 }

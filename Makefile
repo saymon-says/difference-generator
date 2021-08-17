@@ -4,7 +4,6 @@ install:
 	gradlew clean install
 
 run-dist:
-	#/Users/serdi/Hexlet/java/java-project-lvl1/build/install/app/bin/app
 	build\install\app\bin\app
 check-updates:
 	gradlew dependencyUpdates
@@ -17,4 +16,4 @@ build:
 
 dist:
 	gradlew clean install
-	build\install\app\bin\app src/main/java/resource/filepath1.json src/main/java/resource/filepath2.json
+	build\install\app\bin\app filepath1.json filepath2.json

@@ -3,8 +3,6 @@ package hexlet.code;
 import picocli.CommandLine;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
 
 
 @CommandLine.Command(name = "gendiff",
@@ -19,16 +17,16 @@ public final class App implements Runnable {
     private File archive;
 
     @CommandLine.Parameters(paramLabel = "filepath1", description = "path to first file")
-    private Path files1;
+    private String files1;
 
     @CommandLine.Parameters(paramLabel = "filepath2", description = "path to second file")
-    private Path files2;
+    private String files2;
 
 
     public void run() {
         try {
             System.out.println(Differ.generate(files1, files2));
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
