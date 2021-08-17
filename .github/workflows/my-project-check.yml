@@ -15,10 +15,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '14'
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Build with Gradle
-        run: make build
       - name: Report test
       - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
       - run: chmod +x ./cc-test-reporter
