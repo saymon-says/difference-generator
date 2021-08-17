@@ -1,5 +1,6 @@
 language: java
-install: make
+install:
+  - make install
 before_install:
   - chmod +x gradlew
 jdk:
