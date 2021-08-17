@@ -1,0 +1,9 @@
+language: java
+jdk:
+  - oraclejdk14
+
+script:
+  - make lint
+  - make test
+notifications:
+  email: false

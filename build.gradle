@@ -2,7 +2,6 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.38.0'
     id 'application'
     id 'checkstyle'
-    id 'jacoco'
 }
 
 group = 'hexlet.code'
@@ -16,20 +15,8 @@ repositories {
     mavenCentral()
 }
 
-jacoco {
-    toolVersion = "0.8.5"
-    reportsDir = file("$buildDir/jacoco")
-}
-
 test {
     useJUnitPlatform()
-    finalizedBy jacocoTestReport
-}
-jacocoTestReport {
-    dependsOn test
-    reports {
-        xml.enabled true
-    }
 }
 
 dependencies {
