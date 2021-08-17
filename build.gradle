@@ -17,12 +17,16 @@ repositories {
 }
 
 jacoco {
-    applyTo run
+    toolVersion = "0.8.5"
+    reportsDir = file("$buildDir/jacoco")
 }
 
-tasks.register('applicationCodeCoverageReport', JacocoReport) {
-    executionData run
-    sourceSets sourceSets.main
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+jacocoTestReport {
+    dependsOn test
 }
 
 dependencies {
@@ -36,8 +40,5 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.20.2'
 }
 
-test {
-    useJUnitPlatform()
-}
 
 mainClassName = 'hexlet.code.App'
