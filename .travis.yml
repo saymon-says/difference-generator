@@ -1,8 +1,8 @@
 language: java
-install:
-  - make install
 before_install:
   - chmod +x gradlew
+install:
+  - make install
 jdk:
   - oraclejdk14
 script:
