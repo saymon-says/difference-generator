@@ -19,8 +19,7 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: make build
-      - name: Coverage to Codeclimate
-          uses: saymon-says/codeclimate-action@2
-          env:
-            CC_TEST_REPORTER_ID:
-              ${{ secrets.CODECLIMATE_KEY }}: ${{github.workspace}}/target/site/jacoco/jacoco.xml:jacoco
+      - name: Coverage to CodeCLimate
+        uses: saymon-says/codeclimate-action@2
+        env:
+            ${{ secrets.CODECLIMATE_KEY }}: ${{github.workspace}}/target/site/jacoco/jacoco.xml:jacoco
