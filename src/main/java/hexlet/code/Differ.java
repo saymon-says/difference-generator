@@ -20,11 +20,20 @@ public class Differ {
 
         for (String key : keySet) {
             if ((mapOfFile1.containsKey(key)) && (mapOfFile2.containsKey(key))) {
-                if (mapOfFile1.get(key).equals(mapOfFile2.get(key))) {
-                    resultMap.put("  " + key, mapOfFile2.get(key));
+                if (!checkNullValue(key, mapOfFile1)) {
+                    if (mapOfFile1.get(key).equals(mapOfFile2.get(key))) {
+                        resultMap.put("  " + key, mapOfFile2.get(key));
+                    } else {
+                        resultMap.put("- " + key, mapOfFile1.get(key));
+                        resultMap.put("+ " + key, mapOfFile2.get(key));
+                    }
                 } else {
-                    resultMap.put("- " + key, mapOfFile1.get(key));
-                    resultMap.put("+ " + key, mapOfFile2.get(key));
+                    if (mapOfFile1.get(key) == mapOfFile2.get(key)) {
+                        resultMap.put("  " + key, mapOfFile2.get(key));
+                    } else {
+                        resultMap.put("- " + key, mapOfFile1.get(key));
+                        resultMap.put("+ " + key, mapOfFile2.get(key));
+                    }
                 }
             } else if ((mapOfFile1.containsKey(key)) && (!mapOfFile2.containsKey(key))) {
                 resultMap.put("- " + key, mapOfFile1.get(key));
@@ -34,6 +43,10 @@ public class Differ {
         }
 
         return mapToString(resultMap);
+    }
+
+    private static boolean checkNullValue(String key, Map<String, Object> map) {
+        return map.get(key) == null;
     }
 
     public static <K, V> String mapToString(Map<K, V> map) {

@@ -16,4 +16,4 @@ build:
 
 dist:
 	gradlew clean install
-	build\install\app\bin\app filepath1.json filepath2.json
+	build\install\app\bin\app -f

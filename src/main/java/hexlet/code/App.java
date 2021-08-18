@@ -13,7 +13,8 @@ public final class App implements Runnable {
 
     @CommandLine.Option(names = {"-f", "--format"},
             paramLabel = "format",
-            description = "output format [default: stylish]")
+            defaultValue = "stylish",
+            description = "output format [default: ${DEFAULT-VALUE}]")
     private File archive;
 
     @CommandLine.Parameters(paramLabel = "filepath1", description = "path to first file")
