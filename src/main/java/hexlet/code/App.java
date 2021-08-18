@@ -24,7 +24,7 @@ public final class App implements Runnable {
 
     public void run() {
         try {
-            System.out.println(Differ.generate(files1, files2, "stylish"));
+            System.out.println(Differ.generate(files1, files2, format));
         } catch (Exception e) {
             e.printStackTrace();
         }
