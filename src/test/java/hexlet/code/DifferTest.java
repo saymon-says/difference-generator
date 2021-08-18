@@ -43,4 +43,13 @@ class DifferTest {
         String expectedContent = Files.readString(Parser.getFixturePath("expected_json.json"));
         assertThat(actualContent).isEqualTo(expectedContent);
     }
+
+    @Test
+    void generateYamlPlainFormat() throws Exception {
+        String fileYaml1 = "file1.yaml";
+        String fileYaml2 = "file2.yaml";
+        String actualContent = Differ.generate(fileYaml1, fileYaml2, "plain");
+        String expectedContent = Files.readString(Parser.getFixturePath("expected_plain.txt"));
+        assertThat(actualContent).isEqualTo(expectedContent);
+    }
 }
