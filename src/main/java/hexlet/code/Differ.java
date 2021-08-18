@@ -3,7 +3,6 @@ package hexlet.code;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static hexlet.code.Parser.getMapFromFile;
@@ -15,13 +14,7 @@ public class Differ {
         Map<String, Object> mapOfFile1 = getMapFromFile(filePath1);
         Map<String, Object> mapOfFile2 = getMapFromFile(filePath2);
 
-        Set<String> keySet = new TreeSet<>();
-        for (Map.Entry<String, Object> map : mapOfFile1.entrySet()) {
-            keySet.add(map.getKey());
-        }
-        for (Map.Entry<String, Object> map : mapOfFile2.entrySet()) {
-            keySet.add(map.getKey());
-        }
+        Set<String> keySet = Parser.getKeySet(mapOfFile1, mapOfFile2);
 
         Map<String, Object> resultMap = new LinkedHashMap<>();
 

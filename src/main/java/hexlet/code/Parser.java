@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Parser {
 
@@ -30,6 +32,17 @@ public class Parser {
             return mapper.readValue(getFile(filePath), new TypeReference<>() {
             });
         }
+    }
+
+    public static Set<String> getKeySet(Map<String, Object> map1, Map<String, Object> map2) {
+        Set<String> keySet = new TreeSet<>();
+        for (Map.Entry<String, Object> map : map1.entrySet()) {
+            keySet.add(map.getKey());
+        }
+        for (Map.Entry<String, Object> map : map2.entrySet()) {
+            keySet.add(map.getKey());
+        }
+        return keySet;
     }
 
 }
