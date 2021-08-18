@@ -1,49 +1,62 @@
 package hexlet.code;
 
+import hexlet.code.formatters.Plain;
+import hexlet.code.formatters.Stylish;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static hexlet.code.formatters.Formatter.stylish;
-import static hexlet.code.Parser.getMapFromFile;
-
 public class Differ {
+
+    public static final String UNCHANGED = "unchanged";
+    public static final String CHANGED = "changed";
+    public static final String ADDED = "added";
+    public static final String REMOVED = "removed";
+
+    public static void main(String[] args) throws Exception {
+        String fileJson1 = "file1.json";
+        String fileJson2 = "file2.json";
+        System.out.println(generate(fileJson1, fileJson2, "stylish"));
+    }
 
     public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
 
-        Map<String, Object> mapOfFile1 = getMapFromFile(filePath1);
-        Map<String, Object> mapOfFile2 = getMapFromFile(filePath2);
-        Set<String> keySet = Parser.getKeySet(mapOfFile1, mapOfFile2);
-        Map<String, Object> resultMap = new LinkedHashMap<>();
-
-        for (String key : keySet) {
-            if ((mapOfFile1.containsKey(key)) && (mapOfFile2.containsKey(key))) {
-                if (!checkNullValue(key, mapOfFile1)) {
-                    if (mapOfFile1.get(key).equals(mapOfFile2.get(key))) {
-                        resultMap.put("  " + key, mapOfFile2.get(key));
-                    } else {
-                        resultMap.put("- " + key, mapOfFile1.get(key));
-                        resultMap.put("+ " + key, mapOfFile2.get(key));
-                    }
-                } else {
-                    if (mapOfFile1.get(key) == mapOfFile2.get(key)) {
-                        resultMap.put("  " + key, mapOfFile2.get(key));
-                    } else {
-                        resultMap.put("- " + key, mapOfFile1.get(key));
-                        resultMap.put("+ " + key, mapOfFile2.get(key));
-                    }
-                }
-            } else if ((mapOfFile1.containsKey(key)) && (!mapOfFile2.containsKey(key))) {
-                resultMap.put("- " + key, mapOfFile1.get(key));
-            } else {
-                resultMap.put("+ " + key, mapOfFile2.get(key));
-            }
-        }
-        return stylish(resultMap);
+        return Plain.plain(Plain.getResultPlainMap(filePath1, filePath2));
     }
+
 
     private static boolean checkNullValue(String key, Map<String, Object> map) {
         return map.get(key) == null;
+    }
+
+    public static Map<String, String> getDiffFile(Set<String> keySet,
+                                                  Map<String, Object> map1,
+                                                  Map<String, Object> map2) {
+        Map<String, String> resultMapDiff = new LinkedHashMap<>();
+
+        for (String key : keySet) {
+            if ((map1.containsKey(key)) && (map2.containsKey(key))) {
+                if (!checkNullValue(key, map1)) {
+                    if (map1.get(key).equals(map2.get(key))) {
+                        resultMapDiff.put(key, UNCHANGED);
+                    } else {
+                        resultMapDiff.put(key, CHANGED);
+                    }
+                } else {
+                    if (map1.get(key) == map2.get(key)) {
+                        resultMapDiff.put(key, UNCHANGED);
+                    } else {
+                        resultMapDiff.put(key, CHANGED);
+                    }
+                }
+            } else if ((map1.containsKey(key)) && (!map2.containsKey(key))) {
+                resultMapDiff.put(key, REMOVED);
+            } else {
+                resultMapDiff.put(key, ADDED);
+            }
+        }
+        return resultMapDiff;
     }
 
 }

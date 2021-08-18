@@ -16,4 +16,4 @@ build:
 
 dist:
 	gradlew clean install
-	build\install\app\bin\app -f -plain file1.json file2.json
+	build\install\app\bin\app -f plain file1.json file2.json
