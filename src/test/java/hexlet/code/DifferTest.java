@@ -8,14 +8,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DifferTest {
 
-    private static String file1 = "filepath1.json";
-    private static String file2 = "filepath2.json";
-
+    @Test
+    void generateJsonFormat() throws Exception {
+        String fileJson1 = "filepath1.json";
+        String fileJson2 = "filepath2.json";
+        String actualContent = Differ.generate(fileJson1, fileJson2);
+        String expectedContent = Files.readString(Parser.getFixturePath("expected.json"));
+        assertThat(actualContent).isEqualTo(expectedContent);
+    }
 
     @Test
-    void generate() throws Exception {
-        String actualContent = Differ.generate(file1, file2);
-        String expectedContent = Files.readString(Differ.getFixturePath("expected.json"));
+    void generateYamlFormat() throws Exception {
+        String fileYaml1 = "filepath1.yaml";
+        String fileYaml2 = "filepath2.yaml";
+        String actualContent = Differ.generate(fileYaml1, fileYaml2);
+        String expectedContent = Files.readString(Parser.getFixturePath("expected.json"));
         assertThat(actualContent).isEqualTo(expectedContent);
     }
 }

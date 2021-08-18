@@ -1,17 +1,12 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+
+import static hexlet.code.Parser.getMapFromFile;
 
 public class Differ {
 
@@ -55,17 +50,4 @@ public class Differ {
                 .collect(Collectors.joining("\r\n", "{\r\n", "\r\n}"));
     }
 
-    public static Path getFixturePath(String fileName) {
-        return Paths.get("src/test/java/resources/", fileName).toAbsolutePath().normalize();
-    }
-
-    private static File getFile(String fileName) {
-        return new File(String.valueOf(getFixturePath(fileName)));
-    }
-
-    private static Map<String, Object> getMapFromFile(String filePath) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(getFile(filePath), new TypeReference<>() {
-        });
-    }
 }
