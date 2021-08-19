@@ -8,12 +8,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static hexlet.code.Differ.*;
+import static hexlet.code.Differ.CHANGED;
+import static hexlet.code.Differ.REMOVED;
+import static hexlet.code.Differ.ADDED;
+
 import static hexlet.code.Parser.getMapFromFile;
 
-public class Plain {
+public class Plain implements Formatter {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
+
+    private static final StringBuilder builder = new StringBuilder();
 
     public static String getResultPlainMap(String fileName1, String fileName2) throws IOException {
 
@@ -22,35 +27,19 @@ public class Plain {
         Set<String> keySet = Parser.getKeySet(mapOfFile1, mapOfFile2);
 
         Map<String, String> diff = Differ.getDiffFile(keySet, mapOfFile1, mapOfFile2);
-        StringBuilder builder = new StringBuilder();
+        Plain plain = new Plain();
         for (Map.Entry<String, String> entry : diff.entrySet()) {
             String key = entry.getKey();
             String difference = entry.getValue();
 
             if (difference.equals(CHANGED)) {
-                builder.append("Property '")
-                        .append(key)
-                        .append("' was updated. From ")
-                        .append(isComplex(mapOfFile1.get(key)) ? "[complex value]"
-                                : isString(mapOfFile1.get(key)) ? "'" + mapOfFile1.get(key) + "'" : mapOfFile1.get(key))
-                        .append(" to ")
-                        .append(isComplex(mapOfFile2.get(key)) ? "[complex value]"
-                                : isString(mapOfFile2.get(key)) ? "'" + mapOfFile2.get(key) + "'" : mapOfFile2.get(key))
-                        .append(LINE_SEPARATOR);
+                plain.changed(key, mapOfFile1, mapOfFile2);
             }
             if (difference.equals(REMOVED)) {
-                builder.append("Property '")
-                        .append(key)
-                        .append("' was removed")
-                        .append(LINE_SEPARATOR);
+                plain.removed(key, mapOfFile1, mapOfFile2);
             }
             if (difference.equals(ADDED)) {
-                builder.append("Property '")
-                        .append(key)
-                        .append("' was added with value: ")
-                        .append(isComplex(mapOfFile2.get(key)) ? "[complex value]"
-                                : isString(mapOfFile2.get(key)) ? "'" + mapOfFile2.get(key) + "'" : mapOfFile2.get(key))
-                        .append(LINE_SEPARATOR);
+                plain.added(key, mapOfFile1, mapOfFile2);
             }
         }
         builder.deleteCharAt(builder.lastIndexOf("\r\n"));
@@ -66,4 +55,42 @@ public class Plain {
         return obj instanceof String;
     }
 
+    @Override
+    public String changed(String key, Map<String, Object> map1, Map<String, Object> map2) {
+        builder.append("Property '")
+                .append(key)
+                .append("' was updated. From ")
+                .append(isComplex(map1.get(key)) ? "[complex value]"
+                        : isString(map1.get(key)) ? "'" + map1.get(key) + "'" : map1.get(key))
+                .append(" to ")
+                .append(isComplex(map2.get(key)) ? "[complex value]"
+                        : isString(map2.get(key)) ? "'" + map2.get(key) + "'" : map2.get(key))
+                .append(LINE_SEPARATOR);
+        return builder.toString();
+    }
+
+    @Override
+    public String unchanged(String key, Map<String, Object> map1, Map<String, Object> map2) {
+        return null;
+    }
+
+    @Override
+    public String added(String key, Map<String, Object> map1, Map<String, Object> map2) {
+        builder.append("Property '")
+                .append(key)
+                .append("' was added with value: ")
+                .append(isComplex(map2.get(key)) ? "[complex value]"
+                        : isString(map2.get(key)) ? "'" + map2.get(key) + "'" : map2.get(key))
+                .append(LINE_SEPARATOR);
+        return builder.toString();
+    }
+
+    @Override
+    public String removed(String key, Map<String, Object> map1, Map<String, Object> map2) {
+        builder.append("Property '")
+                .append(key)
+                .append("' was removed")
+                .append(LINE_SEPARATOR);
+        return builder.toString();
+    }
 }

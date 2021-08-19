@@ -4,51 +4,83 @@ import hexlet.code.Differ;
 import hexlet.code.Parser;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import static hexlet.code.Differ.*;
+import static hexlet.code.Differ.CHANGED;
+import static hexlet.code.Differ.REMOVED;
+import static hexlet.code.Differ.ADDED;
+import static hexlet.code.Differ.UNCHANGED;
+
 import static hexlet.code.Parser.getMapFromFile;
 
-public class Stylish {
+public class Stylish implements Formatter {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
-    public static Map<String, Object> getResultStylishMap(String fileName1, String fileName2) throws IOException {
+    private static final StringBuilder builder = new StringBuilder("{" + LINE_SEPARATOR);
+
+    public static String getResultStylishMap(String fileName1, String fileName2) throws IOException {
 
         Map<String, Object> mapOfFile1 = getMapFromFile(fileName1);
         Map<String, Object> mapOfFile2 = getMapFromFile(fileName2);
         Set<String> keySet = Parser.getKeySet(mapOfFile1, mapOfFile2);
 
-        Map<String, Object> resultGenerate = new LinkedHashMap<>();
         Map<String, String> diff = Differ.getDiffFile(keySet, mapOfFile1, mapOfFile2);
+        Stylish stylish = new Stylish();
         for (Map.Entry<String, String> entry : diff.entrySet()) {
             String key = entry.getKey();
             String difference = entry.getValue();
             if (difference.equals(UNCHANGED)) {
-                resultGenerate.put("  " + key, mapOfFile1.get(key));
+                stylish.unchanged(key, mapOfFile1, mapOfFile2);
             }
             if (difference.equals(CHANGED)) {
-                resultGenerate.put("- " + key, mapOfFile1.get(key));
-                resultGenerate.put("+ " + key, mapOfFile2.get(key));
+                stylish.changed(key, mapOfFile1, mapOfFile2);
             }
             if (difference.equals(REMOVED)) {
-                resultGenerate.put("- " + key, mapOfFile1.get(key));
+                stylish.removed(key, mapOfFile1, mapOfFile2);
             }
             if (difference.equals(ADDED)) {
-                resultGenerate.put("+ " + key, mapOfFile2.get(key));
+                stylish.added(key, mapOfFile1, mapOfFile2);
             }
         }
-        return resultGenerate;
+        builder.append("}");
+        return builder.toString();
     }
 
-    public static <K, V> String mapToString(Map<K, V> map) {
-        return map.entrySet()
-                .stream()
-                .map(entry -> "  " + entry.getKey() + ": " + entry.getValue())
-                .collect(Collectors.joining(LINE_SEPARATOR, "{" + LINE_SEPARATOR, LINE_SEPARATOR + "}"));
+
+    @Override
+    public String changed(String key, Map<String, Object> map1, Map<String, Object> map2) {
+        return removed(key,map1, map2) + added(key, map1, map2);
     }
 
+    @Override
+    public String unchanged(String key, Map<String, Object> map1, Map<String, Object> map2) {
+        builder.append("    ")
+                .append(key)
+                .append(": ")
+                .append(map1.get(key))
+                .append(LINE_SEPARATOR);
+        return builder.toString();
+    }
+
+    @Override
+    public String added(String key, Map<String, Object> map1, Map<String, Object> map2) {
+        builder.append("  + ")
+                .append(key)
+                .append(": ")
+                .append(map2.get(key))
+                .append(LINE_SEPARATOR);
+        return builder.toString();
+    }
+
+    @Override
+    public String removed(String key, Map<String, Object> map1, Map<String, Object> map2) {
+        builder.append("  - ")
+                .append(key)
+                .append(": ")
+                .append(map1.get(key))
+                .append(LINE_SEPARATOR);
+        return builder.toString();
+    }
 }

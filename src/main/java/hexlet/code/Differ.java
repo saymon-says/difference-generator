@@ -7,8 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static hexlet.code.formatters.Stylish.getResultStylishMap;
-
 public class Differ {
 
     public static final String UNCHANGED = "unchanged";
@@ -16,16 +14,16 @@ public class Differ {
     public static final String ADDED = "added";
     public static final String REMOVED = "removed";
 
-    public static void main(String[] args) throws Exception {
-        String fileJson1 = "file1.json";
-        String fileJson2 = "file2.json";
-        System.out.println(generate(fileJson1, fileJson2, "stylish"));
-    }
+//    public static void main(String[] args) throws Exception {
+//        String fileJson1 = "file1.json";
+//        String fileJson2 = "file2.json";
+//        System.out.println(generate(fileJson1, fileJson2, "stylish"));
+//    }
 
     public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
 
         if (formatName.equals("stylish")) {
-            return Stylish.mapToString(getResultStylishMap(filePath1, filePath2));
+            return Stylish.getResultStylishMap(filePath1, filePath2);
         } else return Plain.getResultPlainMap(filePath1, filePath2);
     }
 
