@@ -44,14 +44,14 @@ class DifferTest {
         assertThat(actualContentNestedYamlStylish).isEqualTo(expectedContentNestedYamlStylish);
     }
 
-//    @Test
-//    void generateNestedYamlPlainFormat() throws Exception {
-//        String fileYaml1 = "file1.yaml";
-//        String fileYaml2 = "file2.yaml";
-//        String actualContentNestedYamlPlain = Differ.generate(fileYaml1, fileYaml2, "plain");
-//        String expectedContentNestedYamlPlain = Files.readString(Parser.getFixturePath("expected_plain.txt"));
-//        assertThat(actualContentNestedYamlPlain).isEqualTo(expectedContentNestedYamlPlain);
-//    }
+    @Test
+    void generateNestedYamlPlainFormat() throws Exception {
+        String fileYaml1 = "file1.yaml";
+        String fileYaml2 = "file2.yaml";
+        String actualContentNestedYamlPlain = Differ.generate(fileYaml1, fileYaml2, "plain");
+        String expectedContentNestedYamlPlain = Files.readString(Parser.getFixturePath("expected_plain.txt"));
+        assertThat(actualContentNestedYamlPlain).isEqualTo(expectedContentNestedYamlPlain);
+    }
 
     @Test
     void generateSimpleJsonJsonFormat() throws Exception {

@@ -1,6 +1,5 @@
 package hexlet.code.formatters;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.Differ;
 import hexlet.code.Parser;
 
@@ -8,14 +7,13 @@ import static hexlet.code.Differ.CHANGED;
 import static hexlet.code.Differ.UNCHANGED;
 import static hexlet.code.Differ.REMOVED;
 import static hexlet.code.Differ.ADDED;
-import static hexlet.code.Differ.LINE_SEPARATOR;
 import static hexlet.code.formatters.Plain.isString;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
-public class Json implements Format {
+public final class Json implements Format {
 
     @Override
     public String getResult(String fileName1, String fileName2) throws IOException {
