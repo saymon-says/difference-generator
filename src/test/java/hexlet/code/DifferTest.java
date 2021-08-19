@@ -1,19 +1,14 @@
 package hexlet.code;
 
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import java.nio.file.Files;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class DifferTest {
 
     @Test
-    @Order(1)
     void generateSimpleJsonStylishFormat() throws Exception {
         String fileJson1 = "filepath1.json";
         String fileJson2 = "filepath2.json";
@@ -23,7 +18,6 @@ class DifferTest {
     }
 
     @Test
-    @Order(2)
     void generateSimpleYamlStylishFormat() throws Exception {
         String fileYaml1 = "filepath1.yaml";
         String fileYaml2 = "filepath2.yaml";
@@ -33,7 +27,6 @@ class DifferTest {
     }
 
     @Test
-    @Order(3)
     void generateNestedJsonStylishFormat() throws Exception {
         String fileYaml1 = "file1.json";
         String fileYaml2 = "file2.json";
@@ -43,7 +36,6 @@ class DifferTest {
     }
 
     @Test
-    @Order(4)
     void generateNestedYamlStylishFormat() throws Exception {
         String fileYaml1 = "file1.yaml";
         String fileYaml2 = "file2.yaml";
@@ -53,7 +45,6 @@ class DifferTest {
     }
 
     @Test
-    @Order(5)
     void generateNestedYamlPlainFormat() throws Exception {
         String fileYaml1 = "file1.yaml";
         String fileYaml2 = "file2.yaml";

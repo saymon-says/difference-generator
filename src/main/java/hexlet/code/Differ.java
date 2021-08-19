@@ -1,8 +1,6 @@
 package hexlet.code;
 
-import hexlet.code.formatters.Plain;
-import hexlet.code.formatters.Stylish;
-
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -20,11 +18,8 @@ public class Differ {
 //        System.out.println(generate(fileJson1, fileJson2, "stylish"));
 //    }
 
-    public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
-
-        if (formatName.equals("stylish")) {
-            return Stylish.getResultStylishMap(filePath1, filePath2);
-        } else return Plain.getResultPlainMap(filePath1, filePath2);
+    public static String generate(String filePath1, String filePath2, String formatName) throws IOException {
+        return Formatter.getFormatter(formatName).getResult(filePath1, filePath2);
     }
 
 
