@@ -56,7 +56,7 @@ public final class Plain implements Format {
                         .append(LINE_SEPARATOR);
             }
         }
-        builder.deleteCharAt(builder.lastIndexOf("\r\n"));
+//        builder.deleteCharAt(builder.lastIndexOf("\r\n"));
         builder.deleteCharAt(builder.lastIndexOf("\n"));
         return builder.toString();
     }
