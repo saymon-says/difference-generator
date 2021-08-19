@@ -11,11 +11,10 @@ import java.util.Set;
 import static hexlet.code.Differ.CHANGED;
 import static hexlet.code.Differ.REMOVED;
 import static hexlet.code.Differ.ADDED;
+import static hexlet.code.Differ.LINE_SEPARATOR;
 import static hexlet.code.Parser.getMapFromFile;
 
 public final class Plain implements Format {
-
-    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     @Override
     public String getResult(String fileName1, String fileName2) throws IOException {
@@ -65,7 +64,7 @@ public final class Plain implements Format {
         return obj instanceof List || obj instanceof Map || obj instanceof Object[];
     }
 
-    private static boolean isString(Object obj) {
+    public static boolean isString(Object obj) {
         return obj instanceof String;
     }
 }

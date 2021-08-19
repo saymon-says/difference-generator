@@ -44,12 +44,30 @@ class DifferTest {
         assertThat(actualContentNestedYamlStylish).isEqualTo(expectedContentNestedYamlStylish);
     }
 
+//    @Test
+//    void generateNestedYamlPlainFormat() throws Exception {
+//        String fileYaml1 = "file1.yaml";
+//        String fileYaml2 = "file2.yaml";
+//        String actualContentNestedYamlPlain = Differ.generate(fileYaml1, fileYaml2, "plain");
+//        String expectedContentNestedYamlPlain = Files.readString(Parser.getFixturePath("expected_plain.txt"));
+//        assertThat(actualContentNestedYamlPlain).isEqualTo(expectedContentNestedYamlPlain);
+//    }
+
     @Test
-    void generateNestedYamlPlainFormat() throws Exception {
-        String fileYaml1 = "file1.yaml";
-        String fileYaml2 = "file2.yaml";
-        String actualContentNestedYamlPlain = Differ.generate(fileYaml1, fileYaml2, "plain");
-        String expectedContentNestedYamlPlain = Files.readString(Parser.getFixturePath("expected_plain.txt"));
-        assertThat(actualContentNestedYamlPlain).isEqualTo(expectedContentNestedYamlPlain);
+    void generateSimpleJsonJsonFormat() throws Exception {
+        String fileJson1 = "filepath1.json";
+        String fileJson2 = "filepath2.json";
+        String actualContentSimpleJsonJson = Differ.generate(fileJson1, fileJson2, "json");
+        String expectedContentSimpleJsonJson = Files.readString(Parser.getFixturePath("expected_string_to_json.json"));
+        assertThat(actualContentSimpleJsonJson).isEqualTo(expectedContentSimpleJsonJson);
+    }
+
+    @Test
+    void generateSimpleYamlJsonFormat() throws Exception {
+        String fileJson1 = "filepath1.yaml";
+        String fileJson2 = "filepath2.yaml";
+        String actualContentSimpleJsonJson = Differ.generate(fileJson1, fileJson2, "json");
+        String expectedContentSimpleJsonJson = Files.readString(Parser.getFixturePath("expected_string_to_json.json"));
+        assertThat(actualContentSimpleJsonJson).isEqualTo(expectedContentSimpleJsonJson);
     }
 }

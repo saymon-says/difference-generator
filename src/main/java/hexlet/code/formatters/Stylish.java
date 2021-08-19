@@ -11,10 +11,9 @@ import static hexlet.code.Differ.CHANGED;
 import static hexlet.code.Differ.UNCHANGED;
 import static hexlet.code.Differ.REMOVED;
 import static hexlet.code.Differ.ADDED;
+import static hexlet.code.Differ.LINE_SEPARATOR;
 
 public final class Stylish implements Format {
-
-    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     @Override
     public String getResult(String fileName1, String fileName2) throws IOException {

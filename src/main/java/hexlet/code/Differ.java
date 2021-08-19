@@ -1,5 +1,7 @@
 package hexlet.code;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,12 +13,17 @@ public class Differ {
     public static final String CHANGED = "changed";
     public static final String ADDED = "added";
     public static final String REMOVED = "removed";
+    public static final String LINE_SEPARATOR = System.lineSeparator();
 
-//    public static void main(String[] args) throws Exception {
-//        String fileJson1 = "file1.json";
-//        String fileJson2 = "file2.json";
-//        System.out.println(generate(fileJson1, fileJson2, "stylish"));
-//    }
+
+    public static void main(String[] args) throws Exception {
+        String fileJson1 = "file1.yaml";
+        String fileJson2 = "file2.yaml";
+        String a = generate(fileJson1, fileJson2, "json");
+        System.out.println(a);
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println(objectMapper.writeValueAsString(a));
+    }
 
     public static String generate(String filePath1, String filePath2, String formatName) throws IOException {
         return Formatter.getFormatter(formatName).getResult(filePath1, filePath2);
