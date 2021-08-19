@@ -37,23 +37,24 @@ public final class Json implements Format {
             }
             if (difference.equals(UNCHANGED)) {
                 builder.append("  \"  ").append(key).append('"').append(": ")
-                        .append(isString(mapOfFile1.get(key)) ? "'" + mapOfFile1.get(key) + "'" : mapOfFile1.get(key))
+                        .append(isString(mapOfFile1.get(key)) ? "\"" + mapOfFile1.get(key) + "\"" : mapOfFile1.get(key))
                         .append(",\n");
             }
             if (difference.equals(ADDED)) {
                 builder.append("  \"+ ").append(key).append('"').append(": ")
-                        .append(isString(mapOfFile2.get(key)) ? "'" + mapOfFile2.get(key) + "'" : mapOfFile2.get(key))
+                        .append(isString(mapOfFile2.get(key)) ? "\"" + mapOfFile2.get(key) + "\"" : mapOfFile2.get(key))
                         .append(",\n");
             }
             if (difference.equals(REMOVED)) {
                 builder.append("  \"- ").append(key).append('"').append(": ")
-                        .append(isString(mapOfFile1.get(key)) ? "'" + mapOfFile1.get(key) + "'" : mapOfFile1.get(key))
+                        .append(isString(mapOfFile1.get(key)) ? "\"" + mapOfFile1.get(key) + "\"" : mapOfFile1.get(key))
                         .append(",\n");
             }
         }
         builder.deleteCharAt(builder.lastIndexOf(",")).append("}");
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        return objectMapper.writeValueAsString(builder.toString().replaceAll("\n", "").replaceAll("\"", "'"));
-        return builder.toString().replaceAll("\n", "").replaceAll("\"", "\"");
+//        return builder.toString().replaceAll("\n", "").replaceAll("\"", "\"");
+        return builder.toString();
     }
 }
