@@ -1,0 +1,25 @@
+{
+  "field": "follow",
+  "was": false,
+  "now": null,
+},
+{
+  "field": "host",
+  "was": "hexlet.io",
+  "now": "hexlet.io",
+},
+{
+  "field": "proxy",
+  "was": "123.234.53.22",
+  "now": null,
+},
+{
+  "field": "timeout",
+  "was": 50,
+  "now": 20,
+},
+{
+  "field": "verbose",
+  "was": null,
+  "now": true,
+}

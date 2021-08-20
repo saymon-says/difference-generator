@@ -13,18 +13,8 @@ public class Differ {
     public static final String REMOVED = "removed";
     public static final String LINE_SEPARATOR = System.lineSeparator();
 
-
-//    public static void main(String[] args) throws Exception {
-//        String fileJson1 = "file1.yaml";
-//        String fileJson2 = "file2.yaml";
-//        String a = generate(fileJson1, fileJson2, "json");
-//        System.out.println(a);
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        System.out.println(objectMapper.writeValueAsString(a));
-//    }
-
     public static String generate(String filePath1, String filePath2, String formatName) throws IOException {
-        return Formatter.getFormatter(formatName).getResult(filePath1, filePath2);
+        return Formatter.getFormatter(formatName).format(filePath1, filePath2);
     }
 
 
