@@ -15,21 +15,21 @@ import java.util.TreeSet;
 public class Parser {
 
     public static Path getFixturePath(String fileName) {
-        return Paths.get("src/test/java/resources/fixtures/", fileName).toAbsolutePath().normalize();
+        return Paths.get(fileName).toAbsolutePath().normalize();
     }
 
     public static File getFile(String fileName) {
         return new File(String.valueOf(getFixturePath(fileName)));
     }
 
-    public static Map<String, Object> getMapFromFile(String filePath) throws IOException {
-        if (filePath.endsWith(".yaml")) {
+    public static Map<String, Object> getMapFromFile(String fileName) throws IOException {
+        if (fileName.endsWith(".yaml")) {
             ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-            return mapper.readValue(getFile(filePath), new TypeReference<>() {
+            return mapper.readValue(getFile(fileName), new TypeReference<>() {
             });
         } else {
             ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(getFile(filePath), new TypeReference<>() {
+            return mapper.readValue(getFile(fileName), new TypeReference<>() {
             });
         }
     }
