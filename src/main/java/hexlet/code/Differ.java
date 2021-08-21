@@ -1,5 +1,7 @@
 package hexlet.code;
 
+import hexlet.code.formatters.Stylish;
+
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,6 +17,10 @@ public class Differ {
 
     public static String generate(String filePath1, String filePath2, String formatName) throws IOException {
         return Formatter.getFormatter(formatName).format(filePath1, filePath2);
+    }
+
+    public static String generate(String filepath1, String filepath2) throws IOException {
+        return new Stylish().format(filepath1, filepath2);
     }
 
 

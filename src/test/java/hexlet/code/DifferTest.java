@@ -77,4 +77,14 @@ class DifferTest {
                 Files.readString(Parser.getFixturePath("expected_nested_yaml.json")).replaceAll("\r", "");
         assertThat(actualContentSimpleJsonJson).isEqualTo(expectedContentSimpleJsonJson);
     }
+
+    @Test
+    void generateSimpleJsonDefaultFormat() throws Exception {
+        String fileJson1 = "simple_json_1.json";
+        String fileJson2 = "simple_json_2.json";
+        String actualContentSimpleJsonStylish = Differ.generate(fileJson1, fileJson2);
+        String expectedContentSimpleJsonStylish =
+                Files.readString(Parser.getFixturePath("expected_simple_stylish.txt"));
+        assertThat(actualContentSimpleJsonStylish).isEqualTo(expectedContentSimpleJsonStylish);
+    }
 }
