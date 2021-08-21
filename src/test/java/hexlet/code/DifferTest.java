@@ -10,8 +10,8 @@ class DifferTest {
 
     @Test
     void generateSimpleJsonStylishFormat() throws Exception {
-        String fileJson1 = "simple_json_1.json";
-        String fileJson2 = "simple_json_2.json";
+        String fileJson1 = "file1.json";
+        String fileJson2 = "file2.json";
         String actualContentSimpleJsonStylish = Differ.generate(fileJson1, fileJson2, "stylish");
         String expectedContentSimpleJsonStylish =
                 Files.readString(Parser.getFixturePath("expected_simple_stylish.txt"));
@@ -20,8 +20,8 @@ class DifferTest {
 
     @Test
     void generateSimpleYamlStylishFormat() throws Exception {
-        String fileYaml1 = "simple_yaml_1.yaml";
-        String fileYaml2 = "simple_yaml_2.yaml";
+        String fileYaml1 = "file1.yaml";
+        String fileYaml2 = "file2.yaml";
         String actualContentSimpleYamlStylish = Differ.generate(fileYaml1, fileYaml2, "stylish");
         String expectedContentSimpleYamlStylish =
                 Files.readString(Parser.getFixturePath("expected_simple_stylish.txt"));
@@ -60,8 +60,8 @@ class DifferTest {
 
     @Test
     void generateSimpleJsonJsonFormat() throws Exception {
-        String fileJson1 = "simple_json_1.json";
-        String fileJson2 = "simple_json_2.json";
+        String fileJson1 = "file1.json";
+        String fileJson2 = "file2.json";
         String actualContentSimpleJsonJson = Differ.generate(fileJson1, fileJson2, "json");
         String expectedContentSimpleJsonJson =
                 Files.readString(Parser.getFixturePath("expected_simple_json.json")).replaceAll("\r", "");
@@ -80,8 +80,8 @@ class DifferTest {
 
     @Test
     void generateSimpleJsonDefaultFormat() throws Exception {
-        String fileJson1 = "simple_json_1.json";
-        String fileJson2 = "simple_json_2.json";
+        String fileJson1 = "file1.json";
+        String fileJson2 = "file2.json";
         String actualContentSimpleJsonStylish = Differ.generate(fileJson1, fileJson2);
         String expectedContentSimpleJsonStylish =
                 Files.readString(Parser.getFixturePath("expected_simple_stylish.txt"));
