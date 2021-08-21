@@ -15,7 +15,7 @@ import java.util.TreeSet;
 public class Parser {
 
     public static Path getFixturePath(String fileName) {
-        return Paths.get("src/test/java/resources/", fileName).toAbsolutePath().normalize();
+        return Paths.get("src/test/java/resources/fixtures/", fileName).toAbsolutePath().normalize();
     }
 
     public static File getFile(String fileName) {
