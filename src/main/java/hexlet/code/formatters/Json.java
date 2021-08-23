@@ -36,7 +36,7 @@ public final class Json implements Format {
                 .append(",").append(LINE_SEPARATOR)
                 .append("  \"now\": ")
                 .append(isString(map2.get(key)) ? "\"" + map2.get(key) + "\"" : map2.get(key))
-                .append(",").append(LINE_SEPARATOR)
+                .append(LINE_SEPARATOR)
                 .append("}").append(",").append(LINE_SEPARATOR);
     }
 }
