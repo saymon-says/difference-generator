@@ -23,12 +23,12 @@ public class Parser {
     }
 
     public static Map<String, Object> getMapFromFile(String fileName) throws IOException {
-        if (fileName.endsWith(".yaml")) {
-            ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        if(fileName.endsWith(".json")) {
+            ObjectMapper mapper = new ObjectMapper();
             return mapper.readValue(getFile(fileName), new TypeReference<>() {
             });
         } else {
-            ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
             return mapper.readValue(getFile(fileName), new TypeReference<>() {
             });
         }
