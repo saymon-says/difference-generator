@@ -23,7 +23,7 @@ public class Parser {
     }
 
     public static Map<String, Object> getMapFromFile(String fileName) throws IOException {
-        if(fileName.endsWith(".json")) {
+        if (fileName.endsWith(".json")) {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.readValue(getFile(fileName), new TypeReference<>() {
             });
