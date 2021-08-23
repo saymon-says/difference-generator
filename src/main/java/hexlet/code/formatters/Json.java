@@ -24,7 +24,8 @@ public final class Json implements Format {
             String key = entry.getKey();
             builder.append(getStringBlock(key, mapOfFile1, mapOfFile2));
         }
-        builder.deleteCharAt(builder.lastIndexOf(",")).deleteCharAt(builder.lastIndexOf("\n"));
+//        builder.deleteCharAt(builder.lastIndexOf(",")).deleteCharAt(builder.lastIndexOf("\n"));
+        builder.deleteCharAt(builder.lastIndexOf("\n"));
         return builder.toString().replaceAll("\r", "");
     }
 
@@ -37,6 +38,6 @@ public final class Json implements Format {
                 .append("  \"now\": ")
                 .append(isString(map2.get(key)) ? "\"" + map2.get(key) + "\"" : map2.get(key))
                 .append(",").append(LINE_SEPARATOR)
-                .append("}").append(",").append(LINE_SEPARATOR);
+                .append("}").append(LINE_SEPARATOR);
     }
 }

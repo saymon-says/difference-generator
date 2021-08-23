@@ -2,72 +2,72 @@
   "field": "chars1",
   "was": [a, b, c],
   "now": [a, b, c],
-},
+}
 {
   "field": "chars2",
   "was": [d, e, f],
   "now": false,
-},
+}
 {
   "field": "checked",
   "was": false,
   "now": true,
-},
+}
 {
   "field": "default",
   "was": null,
   "now": [value1, value2],
-},
+}
 {
   "field": "id",
   "was": 45,
   "now": null,
-},
+}
 {
   "field": "key1",
   "was": "value1",
   "now": null,
-},
+}
 {
   "field": "key2",
   "was": null,
   "now": "value2",
-},
+}
 {
   "field": "numbers1",
   "was": [1, 2, 3, 4],
   "now": [1, 2, 3, 4],
-},
+}
 {
   "field": "numbers2",
   "was": [2, 3, 4, 5],
   "now": [22, 33, 44, 55],
-},
+}
 {
   "field": "numbers3",
   "was": [3, 4, 5],
   "now": null,
-},
+}
 {
   "field": "numbers4",
   "was": null,
   "now": [4, 5, 6],
-},
+}
 {
   "field": "obj1",
   "was": null,
   "now": {nestedKey=value, isNested=true},
-},
+}
 {
   "field": "setting1",
   "was": "Some value",
   "now": "Another value",
-},
+}
 {
   "field": "setting2",
   "was": 200,
   "now": 300,
-},
+}
 {
   "field": "setting3",
   "was": true,
