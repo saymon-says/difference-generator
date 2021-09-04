@@ -1,7 +1,7 @@
 package hexlet.code;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedHashMap;
@@ -78,8 +78,8 @@ public class Differ {
         return Paths.get(fileName).toAbsolutePath().normalize();
     }
 
-    public static File getFile(String fileName) {
-        return new File(String.valueOf(getFixturePath(fileName)));
+    public static String getFile(String fileName) throws IOException {
+        return Files.readString(getFixturePath(fileName));
     }
 
 
