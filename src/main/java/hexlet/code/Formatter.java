@@ -8,17 +8,10 @@ import hexlet.code.formatters.Stylish;
 public class Formatter {
 
     public static Format getFormatter(String formatterName) {
-        switch (formatterName) {
-            case "json" -> {
-                return new Json();
-            }
-            case "plain" -> {
-                return new Plain();
-            }
-            default -> {
-                return new Stylish();
-            }
-        }
+        return switch (formatterName) {
+            case "json" -> new Json();
+            case "plain" -> new Plain();
+            default -> new Stylish();
+        };
     }
-
 }

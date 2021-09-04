@@ -1,40 +1,32 @@
 package hexlet.code.formatters;
 
-import hexlet.code.Differ;
-import hexlet.code.Parser;
-
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static hexlet.code.Differ.CHANGED;
 import static hexlet.code.Differ.REMOVED;
 import static hexlet.code.Differ.ADDED;
 import static hexlet.code.Differ.LINE_SEPARATOR;
-import static hexlet.code.Parser.getMapFromFile;
 
 public final class Plain implements Format {
 
     @Override
-    public String format(String fileName1, String fileName2) throws IOException {
-        Map<String, Object> mapOfFile1 = getMapFromFile(fileName1);
-        Map<String, Object> mapOfFile2 = getMapFromFile(fileName2);
-        Set<String> keySet = Parser.getKeySet(mapOfFile1, mapOfFile2);
+    public String format(Map<String, String> diffOfFiles,
+                         Map<String, Object> fileName1,
+                         Map<String, Object> fileName2) {
 
-        Map<String, String> diff = Differ.getDiffFile(keySet, mapOfFile1, mapOfFile2);
         StringBuilder builder = new StringBuilder();
 
-        for (Map.Entry<String, String> entry : diff.entrySet()) {
+        for (Map.Entry<String, String> entry : diffOfFiles.entrySet()) {
             String key = entry.getKey();
             String difference = entry.getValue();
 
             if (CHANGED.equals(difference)) {
-                builder.append(change(key, mapOfFile1, mapOfFile2));
+                builder.append(change(key, fileName1, fileName2));
             } else if (REMOVED.equals(difference)) {
                 builder.append(remove(key));
             } else if (ADDED.equals(difference)) {
-                builder.append(add(key, mapOfFile2));
+                builder.append(add(key, fileName2));
             }
         }
         builder.deleteCharAt(builder.lastIndexOf("\n"));

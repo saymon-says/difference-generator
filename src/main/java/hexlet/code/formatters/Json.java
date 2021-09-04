@@ -1,28 +1,21 @@
 package hexlet.code.formatters;
 
-import hexlet.code.Differ;
-import hexlet.code.Parser;
-
 import static hexlet.code.Differ.LINE_SEPARATOR;
 import static hexlet.code.formatters.Plain.isString;
 
-import java.io.IOException;
 import java.util.Map;
-import java.util.Set;
 
 public final class Json implements Format {
 
     @Override
-    public String format(String fileName1, String fileName2) throws IOException {
-        Map<String, Object> mapOfFile1 = Parser.getMapFromFile(fileName1);
-        Map<String, Object> mapOfFile2 = Parser.getMapFromFile(fileName2);
-        Set<String> keySet = Parser.getKeySet(mapOfFile1, mapOfFile2);
+    public String format(Map<String, String> diffOfFiles,
+                         Map<String, Object> fileName1,
+                         Map<String, Object> fileName2) {
 
-        Map<String, String> diff = Differ.getDiffFile(keySet, mapOfFile1, mapOfFile2);
         StringBuilder builder = new StringBuilder();
-        for (Map.Entry<String, String> entry : diff.entrySet()) {
+        for (Map.Entry<String, String> entry : diffOfFiles.entrySet()) {
             String key = entry.getKey();
-            builder.append(getStringBlock(key, mapOfFile1, mapOfFile2));
+            builder.append(getStringBlock(key, fileName1, fileName2));
         }
         builder.deleteCharAt(builder.lastIndexOf(",")).deleteCharAt(builder.lastIndexOf("\n"));
         return builder.toString().replaceAll("\r", "");

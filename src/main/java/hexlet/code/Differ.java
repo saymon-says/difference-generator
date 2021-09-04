@@ -1,11 +1,13 @@
 package hexlet.code;
 
-import hexlet.code.formatters.Stylish;
-
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Differ {
 
@@ -16,11 +18,15 @@ public class Differ {
     public static final String LINE_SEPARATOR = System.lineSeparator();
 
     public static String generate(String filePath1, String filePath2, String formatName) throws IOException {
-        return Formatter.getFormatter(formatName).format(filePath1, filePath2);
+        Map<String, Object> mapOfFile1 = Parser.getMapFromFile(getFile(filePath1), filePath1);
+        Map<String, Object> mapOfFile2 = Parser.getMapFromFile(getFile(filePath2), filePath2);
+        Set<String> keySet = getKeySet(mapOfFile1, mapOfFile2);
+        Map<String, String> diff = Differ.getDiffFile(keySet, mapOfFile1, mapOfFile2);
+        return Formatter.getFormatter(formatName).format(diff, mapOfFile1, mapOfFile2);
     }
 
     public static String generate(String filepath1, String filepath2) throws IOException {
-        return new Stylish().format(filepath1, filepath2);
+        return generate(filepath1, filepath2, "stylish");
     }
 
 
@@ -56,5 +62,25 @@ public class Differ {
         }
         return resultMapDiff;
     }
+
+    public static Set<String> getKeySet(Map<String, Object> map1, Map<String, Object> map2) {
+        Set<String> keySet = new TreeSet<>();
+        for (Map.Entry<String, Object> map : map1.entrySet()) {
+            keySet.add(map.getKey());
+        }
+        for (Map.Entry<String, Object> map : map2.entrySet()) {
+            keySet.add(map.getKey());
+        }
+        return keySet;
+    }
+
+    public static Path getFixturePath(String fileName) {
+        return Paths.get(fileName).toAbsolutePath().normalize();
+    }
+
+    public static File getFile(String fileName) {
+        return new File(String.valueOf(getFixturePath(fileName)));
+    }
+
 
 }
