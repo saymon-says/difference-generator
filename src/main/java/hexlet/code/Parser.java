@@ -9,15 +9,16 @@ import java.util.Map;
 
 public class Parser {
 
-    public static Map<String, Object> getMapFromFile(String fileContents, String fileName) throws IOException {
-        if (fileName.endsWith(".json")) {
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(fileContents, new TypeReference<>() {
-            });
+    public static Map<String, Object> parseToMap(String contents, String type) throws IOException {
+        return getObjectMapper(type).readValue(contents, new TypeReference<>() {
+        });
+    }
+
+    private static ObjectMapper getObjectMapper(String fileExtension) {
+        if (fileExtension.endsWith(".json")) {
+            return new ObjectMapper();
         } else {
-            ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-            return mapper.readValue(fileContents, new TypeReference<>() {
-            });
+            return new ObjectMapper(new YAMLFactory());
         }
     }
 }

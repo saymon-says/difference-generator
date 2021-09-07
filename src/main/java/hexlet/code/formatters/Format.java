@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 
 public interface Format {
-    String format(Map<String, String> diffOfFiles,
-                  Map<String, Object> fileName1,
-                  Map<String, Object> fileName2) throws IOException;
+    String format(Map<String, String> differenceMap,
+                  Map<String, Object> firstContent,
+                  Map<String, Object> secondContent) throws IOException;
 }

@@ -18,10 +18,10 @@ public class Differ {
     public static final String LINE_SEPARATOR = System.lineSeparator();
 
     public static String generate(String filePath1, String filePath2, String formatName) throws IOException {
-        Map<String, Object> mapOfFile1 = Parser.getMapFromFile(getFile(filePath1), filePath1);
-        Map<String, Object> mapOfFile2 = Parser.getMapFromFile(getFile(filePath2), filePath2);
+        Map<String, Object> mapOfFile1 = Parser.parseToMap(getContentFile(filePath1), filePath1);
+        Map<String, Object> mapOfFile2 = Parser.parseToMap(getContentFile(filePath2), filePath2);
         Set<String> keySet = getKeySet(mapOfFile1, mapOfFile2);
-        Map<String, String> diff = Differ.getDiffFile(keySet, mapOfFile1, mapOfFile2);
+        Map<String, String> diff = buildDiff(keySet, mapOfFile1, mapOfFile2);
         return Formatter.getFormatter(formatName).format(diff, mapOfFile1, mapOfFile2);
     }
 
@@ -29,19 +29,14 @@ public class Differ {
         return generate(filepath1, filepath2, "stylish");
     }
 
-
-    private static boolean checkNullValue(String key, Map<String, Object> map) {
-        return map.get(key) == null;
-    }
-
-    public static Map<String, String> getDiffFile(Set<String> keySet,
-                                                  Map<String, Object> map1,
-                                                  Map<String, Object> map2) {
+    public static Map<String, String> buildDiff(Set<String> keySet,
+                                                Map<String, Object> map1,
+                                                Map<String, Object> map2) {
         Map<String, String> resultMapDiff = new LinkedHashMap<>();
 
         for (String key : keySet) {
             if ((map1.containsKey(key)) && (map2.containsKey(key))) {
-                if (!checkNullValue(key, map1)) {
+                if (map1.get(key) != null) {
                     if (map1.get(key).equals(map2.get(key))) {
                         resultMapDiff.put(key, UNCHANGED);
                     } else {
@@ -64,22 +59,18 @@ public class Differ {
     }
 
     public static Set<String> getKeySet(Map<String, Object> map1, Map<String, Object> map2) {
-        Set<String> keySet = new TreeSet<>();
-        for (Map.Entry<String, Object> map : map1.entrySet()) {
-            keySet.add(map.getKey());
-        }
-        for (Map.Entry<String, Object> map : map2.entrySet()) {
-            keySet.add(map.getKey());
-        }
+        Set<String> keySet = new TreeSet<>(map1.keySet());
+        keySet.addAll(map2.keySet());
+
         return keySet;
     }
 
-    public static Path getFixturePath(String fileName) {
+    public static Path getNormalizedPath(String fileName) {
         return Paths.get(fileName).toAbsolutePath().normalize();
     }
 
-    public static String getFile(String fileName) throws IOException {
-        return Files.readString(getFixturePath(fileName));
+    public static String getContentFile(String fileName) throws IOException {
+        return Files.readString(getNormalizedPath(fileName));
     }
 
 

@@ -8,27 +8,30 @@ import java.util.Map;
 public final class Json implements Format {
 
     @Override
-    public String format(Map<String, String> diffOfFiles,
-                         Map<String, Object> fileName1,
-                         Map<String, Object> fileName2) {
+    public String format(Map<String, String> differenceMap,
+                         Map<String, Object> firstContent,
+                         Map<String, Object> secondContent) {
 
         StringBuilder builder = new StringBuilder();
-        for (Map.Entry<String, String> entry : diffOfFiles.entrySet()) {
-            String key = entry.getKey();
-            builder.append(getStringBlock(key, fileName1, fileName2));
+        for (String key : differenceMap.keySet()) {
+            builder.append(getStringBlock(key, firstContent, secondContent));
         }
         builder.deleteCharAt(builder.lastIndexOf(",")).deleteCharAt(builder.lastIndexOf("\n"));
         return builder.toString().replaceAll("\r", "");
     }
 
-    private static StringBuilder getStringBlock(String key, Map<String, Object> map1, Map<String, Object> map2) {
+    private static StringBuilder getStringBlock(String key,
+                                                Map<String, Object> firstContent,
+                                                Map<String, Object> secondContent) {
         return new StringBuilder("{").append(LINE_SEPARATOR)
                 .append("  \"field\": ").append("\"").append(key).append("\",").append(LINE_SEPARATOR)
                 .append("  \"was\": ")
-                .append(isString(map1.get(key)) ? "\"" + map1.get(key) + "\"" : map1.get(key))
+                .append(isString(firstContent.get(key)) ? "\""
+                        + firstContent.get(key) + "\"" : firstContent.get(key))
                 .append(",").append(LINE_SEPARATOR)
                 .append("  \"now\": ")
-                .append(isString(map2.get(key)) ? "\"" + map2.get(key) + "\"" : map2.get(key))
+                .append(isString(secondContent.get(key)) ? "\""
+                        + secondContent.get(key) + "\"" : secondContent.get(key))
                 .append(LINE_SEPARATOR).append("}").append(",").append(LINE_SEPARATOR);
     }
 }

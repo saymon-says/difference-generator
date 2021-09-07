@@ -11,22 +11,23 @@ import static hexlet.code.Differ.LINE_SEPARATOR;
 public final class Plain implements Format {
 
     @Override
-    public String format(Map<String, String> diffOfFiles,
-                         Map<String, Object> fileName1,
-                         Map<String, Object> fileName2) {
+    public String format(Map<String, String> differenceMap,
+                         Map<String, Object> firstContent,
+                         Map<String, Object> secondContent) {
 
         StringBuilder builder = new StringBuilder();
 
-        for (Map.Entry<String, String> entry : diffOfFiles.entrySet()) {
+        for (Map.Entry<String, String> entry : differenceMap.entrySet()) {
             String key = entry.getKey();
             String difference = entry.getValue();
 
-            if (CHANGED.equals(difference)) {
-                builder.append(change(key, fileName1, fileName2));
-            } else if (REMOVED.equals(difference)) {
-                builder.append(remove(key));
-            } else if (ADDED.equals(difference)) {
-                builder.append(add(key, fileName2));
+            switch (difference) {
+                case CHANGED -> builder.append(change(key, firstContent.get(key), secondContent.get(key)));
+                case REMOVED -> builder.append(remove(key));
+                case ADDED -> builder.append(add(key, secondContent.get(key)));
+                default -> {
+                    break;
+                }
             }
         }
         builder.deleteCharAt(builder.lastIndexOf("\n"));
@@ -41,16 +42,11 @@ public final class Plain implements Format {
         return obj instanceof String;
     }
 
-    private static StringBuilder change(String key, Map<String, Object> map1, Map<String, Object> map2) {
+    private static StringBuilder change(String key, Object objFirstContent, Object objSecondContent) {
         return new StringBuilder("Property '")
-                .append(key)
-                .append("' was updated. From ")
-                .append(isComplex(map1.get(key)) ? "[complex value]"
-                        : isString(map1.get(key)) ? "'" + map1.get(key) + "'" : map1.get(key))
-                .append(" to ")
-                .append(isComplex(map2.get(key)) ? "[complex value]"
-                        : isString(map2.get(key)) ? "'" + map2.get(key) + "'" : map2.get(key))
-                .append(LINE_SEPARATOR);
+                .append(key).append("' was updated. From ")
+                .append(toString(objFirstContent)).append(" to ")
+                .append(toString(objSecondContent)).append(LINE_SEPARATOR);
     }
 
     private static StringBuilder remove(String key) {
@@ -60,12 +56,13 @@ public final class Plain implements Format {
                 .append(LINE_SEPARATOR);
     }
 
-    private static StringBuilder add(String key, Map<String, Object> map2) {
+    private static StringBuilder add(String key, Object obj) {
         return new StringBuilder("Property '")
-                .append(key)
-                .append("' was added with value: ")
-                .append(isComplex(map2.get(key)) ? "[complex value]"
-                        : isString(map2.get(key)) ? "'" + map2.get(key) + "'" : map2.get(key))
-                .append(LINE_SEPARATOR);
+                .append(key).append("' was added with value: ")
+                .append(toString(obj)).append(LINE_SEPARATOR);
+    }
+
+    private static String toString(Object obj) {
+        return isComplex(obj) ? "[complex value]" : isString(obj) ? "'" + obj + "'" : String.valueOf(obj);
     }
 }

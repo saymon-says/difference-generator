@@ -2,22 +2,25 @@ package hexlet.code;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.nio.file.Files;
 
-import static hexlet.code.Differ.getFixturePath;
+import static hexlet.code.Differ.getNormalizedPath;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DifferTest {
 
     private static final String PATH = "src/test/java/resources/fixtures/";
 
+    private static String readFile(String fileName) throws IOException {
+        return Files.readString(getNormalizedPath(PATH + fileName));
+    }
     @Test
-    void generateSimpleJsonStylishFormat() throws Exception {
+    void generateSimpleJsonStylishFormat() throws IOException {
         String fileJson1 = PATH + "file1.json";
         String fileJson2 = PATH + "file2.json";
         String actualContentSimpleJsonStylish = Differ.generate(fileJson1, fileJson2, "stylish");
-        String expectedContentSimpleJsonStylish =
-                Files.readString(getFixturePath(PATH + "expected_simple_stylish.txt"));
+        String expectedContentSimpleJsonStylish = readFile("expected_simple_stylish.txt");
         assertThat(actualContentSimpleJsonStylish).isEqualTo(expectedContentSimpleJsonStylish);
     }
 
@@ -26,8 +29,7 @@ class DifferTest {
         String fileYaml1 = PATH + "file1.yaml";
         String fileYaml2 = PATH + "file2.yaml";
         String actualContentSimpleYamlStylish = Differ.generate(fileYaml1, fileYaml2, "stylish");
-        String expectedContentSimpleYamlStylish =
-                Files.readString(getFixturePath(PATH + "expected_simple_stylish.txt"));
+        String expectedContentSimpleYamlStylish = readFile("expected_simple_stylish.txt");
         assertThat(actualContentSimpleYamlStylish).isEqualTo(expectedContentSimpleYamlStylish);
     }
 
@@ -36,8 +38,7 @@ class DifferTest {
         String fileYaml1 = PATH + "nested_json_1.json";
         String fileYaml2 = PATH + "nested_json_2.json";
         String actualContentNestedJsonStylish = Differ.generate(fileYaml1, fileYaml2, "stylish");
-        String expectedContentNestedJsonStylish = Files.
-                readString(getFixturePath(PATH + "expected_nested_stylish.txt"));
+        String expectedContentNestedJsonStylish = readFile("expected_nested_stylish.txt");
         assertThat(actualContentNestedJsonStylish).isEqualTo(expectedContentNestedJsonStylish);
     }
 
@@ -46,8 +47,7 @@ class DifferTest {
         String fileYaml1 = PATH + "nested_yaml_1.yaml";
         String fileYaml2 = PATH + "nested_yaml_2.yaml";
         String actualContentNestedYamlStylish = Differ.generate(fileYaml1, fileYaml2, "stylish");
-        String expectedContentNestedYamlStylish =
-                Files.readString(getFixturePath(PATH + "expected_nested_stylish.txt"));
+        String expectedContentNestedYamlStylish = readFile("expected_nested_stylish.txt");
         assertThat(actualContentNestedYamlStylish).isEqualTo(expectedContentNestedYamlStylish);
     }
 
@@ -56,8 +56,7 @@ class DifferTest {
         String fileYaml1 = PATH + "nested_yaml_1.yaml";
         String fileYaml2 = PATH + "nested_yaml_2.yaml";
         String actualContentNestedYamlPlain = Differ.generate(fileYaml1, fileYaml2, "plain");
-        String expectedContentNestedYamlPlain =
-                Files.readString(getFixturePath(PATH + "expected_simple_plain.txt")).replaceAll("\r", "");
+        String expectedContentNestedYamlPlain = readFile("expected_simple_plain.txt").replaceAll("\r", "");
         assertThat(actualContentNestedYamlPlain).isEqualTo(expectedContentNestedYamlPlain);
     }
 
@@ -66,8 +65,7 @@ class DifferTest {
         String fileJson1 = PATH + "file1.json";
         String fileJson2 = PATH + "file2.json";
         String actualContentSimpleJsonJson = Differ.generate(fileJson1, fileJson2, "json");
-        String expectedContentSimpleJsonJson =
-                Files.readString(getFixturePath(PATH + "expected_simple_json.json")).replaceAll("\r", "");
+        String expectedContentSimpleJsonJson = readFile("expected_simple_json.json").replaceAll("\r", "");
         assertThat(actualContentSimpleJsonJson).isEqualTo(expectedContentSimpleJsonJson);
     }
 
@@ -76,8 +74,7 @@ class DifferTest {
         String fileJson1 = PATH + "nested_yaml_1.yaml";
         String fileJson2 = PATH + "nested_yaml_2.yaml";
         String actualContentSimpleJsonJson = Differ.generate(fileJson1, fileJson2, "json");
-        String expectedContentSimpleJsonJson =
-                Files.readString(getFixturePath(PATH + "expected_nested_yaml.json")).replaceAll("\r", "");
+        String expectedContentSimpleJsonJson = readFile("expected_nested_yaml.json").replaceAll("\r", "");
         assertThat(actualContentSimpleJsonJson).isEqualTo(expectedContentSimpleJsonJson);
     }
 
@@ -86,8 +83,7 @@ class DifferTest {
         String fileJson1 = PATH + "file1.json";
         String fileJson2 = PATH + "file2.json";
         String actualContentSimpleJsonStylish = Differ.generate(fileJson1, fileJson2);
-        String expectedContentSimpleJsonStylish =
-                Files.readString(getFixturePath(PATH + "expected_simple_stylish.txt"));
+        String expectedContentSimpleJsonStylish = readFile("expected_simple_stylish.txt");
         assertThat(actualContentSimpleJsonStylish).isEqualTo(expectedContentSimpleJsonStylish);
     }
 }
