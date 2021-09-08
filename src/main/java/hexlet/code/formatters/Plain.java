@@ -6,6 +6,7 @@ import java.util.Map;
 import static hexlet.code.Differ.CHANGED;
 import static hexlet.code.Differ.REMOVED;
 import static hexlet.code.Differ.ADDED;
+import static hexlet.code.Differ.UNCHANGED;
 import static hexlet.code.Differ.LINE_SEPARATOR;
 
 public final class Plain implements Format {
@@ -25,9 +26,10 @@ public final class Plain implements Format {
                 case CHANGED -> builder.append(change(key, firstContent.get(key), secondContent.get(key)));
                 case REMOVED -> builder.append(remove(key));
                 case ADDED -> builder.append(add(key, secondContent.get(key)));
-                default -> {
+                case UNCHANGED -> {
                     break;
                 }
+                default -> throw new IllegalArgumentException();
             }
         }
         builder.deleteCharAt(builder.lastIndexOf("\n"));
